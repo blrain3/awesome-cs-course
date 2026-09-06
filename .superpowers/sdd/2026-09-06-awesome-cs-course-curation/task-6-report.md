@@ -160,3 +160,15 @@ The validator now treats every unordered list marker (`-`, `*`, or `+`) in a tax
 python -B scripts/validate_readme.py --self-test: exit 0
 python -B scripts/validate_readme.py README.md: exit 0; Links: 45; Course bullets: 45
 ```
+
+## Follow-up: internal link handling
+
+The canonical README now links to the repository's Chinese translation. The validator accepts in-page and relative repository links without classifying them as malformed external URLs, and the optional link check skips them before constructing network requests. External URLs remain subject to normal syntax and reachability checks; a malformed external URL is not treated as an internal file reference. The self-test covers a relative link, link-check bypass, and a malformed external `.md` URL.
+
+### Fresh verification
+
+```text
+python -B scripts/validate_readme.py --self-test: exit 0
+python -B scripts/validate_readme.py README.md: exit 0; Links: 46; Course bullets: 45
+python -B scripts/validate_readme.py README.md --check-links --timeout 40: exit 0; Links: 46; Course bullets: 45
+```

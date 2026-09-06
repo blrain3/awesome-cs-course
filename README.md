@@ -2,7 +2,7 @@
 
 A curated index of rigorous, publicly available computer science courses and companion texts. Quality over quantity: entries favor complete teaching material, stable links, and long-term learning value.
 
-中文说明：本目录按知识领域整理公开计算机科学课程，优先收录官方、完整、可长期访问的学习材料。
+中文版请见 [README.zh-CN.md](README.zh-CN.md)。
 
 ## Contents
 

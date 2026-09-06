@@ -232,8 +232,11 @@ def _collect_issues(text: str, check_links: bool) -> tuple[list[tuple[int, str]]
             errors.append((1, f"missing required taxonomy heading: ## {section}"))
 
     for link in links:
-        if not _is_external_url(link.url):
-            errors.append((link.line, f"malformed external URL: {link.url}"))
+        if _is_external_url(link.url):
+            continue
+        if _is_internal_link(link.url):
+            continue
+        errors.append((link.line, f"malformed external URL: {link.url}"))
 
     if check_links:
         errors.extend(_check_links(links))
@@ -258,6 +261,26 @@ def _is_external_url(url: str) -> bool:
     except ValueError:
         return False
     return parts.scheme in {"http", "https"} and bool(parts.netloc)
+
+
+def _is_internal_link(url: str) -> bool:
+    """Recognize cross-file and in-file references that are not external URLs.
+
+    Allows in-page anchors, root/relative paths, and file references with
+    optional query strings or fragments. URLs with a scheme or network
+    location are always treated as external candidates instead.
+    """
+    if not url or any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127 for ch in url):
+        return False
+    if url.startswith("#"):
+        return True
+    try:
+        parts = urlsplit(url)
+    except ValueError:
+        return False
+    if parts.scheme or parts.netloc:
+        return False
+    return bool(parts.path or parts.query or parts.fragment)
 
 
 def _validate_contents_entries(
@@ -428,6 +451,8 @@ def _parse_course_bullet(line: str) -> dict[str, str] | None:
 def _check_links(links: list[Link]) -> list[tuple[int, str]]:
     errors: list[tuple[int, str]] = []
     for link in links:
+        if not _is_external_url(link.url):
+            continue
         error = _probe_link(link.url)
         if error is not None:
             errors.append((link.line, f"{error} ({link.url})"))
@@ -543,6 +568,7 @@ def _self_test() -> int:
         "## Foundations and Programming\n\n## Foundations and Programming\n",
         1,
     )
+    internal_link_text = valid_text + "\n\nSee the Chinese version in [README.zh-CN.md](README.zh-CN.md).\n"
     if not any(link.url == "https://example.com/a(b)/c" for link in parse_links(valid_text)):
         print("Self-test failed")
         return 1
@@ -552,6 +578,24 @@ def _self_test() -> int:
         return 1
     if not any("malformed external URL" in message for _, message in invalid_errors):
         print("Self-test failed")
+        return 1
+    internal_errors, _, _ = _collect_issues(internal_link_text, False)
+    if internal_errors:
+        print("Self-test failed: internal link raised errors")
+        return 1
+    internal_links = [link for link in parse_links(internal_link_text) if link.url == "README.zh-CN.md"]
+    try:
+        internal_link_errors = _check_links(internal_links)
+    except Exception:
+        print("Self-test failed: internal link checker raised an exception")
+        return 1
+    if internal_link_errors:
+        print("Self-test failed: internal link checker reported an error")
+        return 1
+    malformed_markdown_text = valid_text + "\n\nBroken: [bad](https://[bad.md)\n"
+    malformed_markdown_errors, _, _ = _collect_issues(malformed_markdown_text, False)
+    if not any("malformed external URL" in message for _, message in malformed_markdown_errors):
+        print("Self-test failed: malformed external markdown URL was ignored")
         return 1
     alternate_marker_errors, _, _ = _collect_issues(alternate_marker_text, False)
     if not any("malformed course bullet" in message for _, message in alternate_marker_errors):

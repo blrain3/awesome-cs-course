@@ -4,7 +4,7 @@ This page is the maintainer-facing snapshot of curriculum coverage and the place
 
 The current README is already subject-first, so the table below focuses on what is covered well, what is only partially represented, and where future additions would still need first-party evidence.
 
-The [canonical link audit](research/link-audit.md) records the response, redirect, and page-content checks for every README URL.
+The [canonical link audit](research/link-audit.md) records the response, redirect, and page-content checks for every external README URL; internal repository links are checked structurally by the validator.
 
 | Domain | Core coverage | Representative entries | Gap or maintenance note |
 | --- | --- | --- | --- |
