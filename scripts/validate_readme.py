@@ -45,6 +45,7 @@ REQUIRED_SECTIONS = [
 COURSE_SECTIONS = set(REQUIRED_SECTIONS)
 HEADING_RE = re.compile(r"^(?P<marks>#{1,6})\s+(?P<text>.+?)\s*$")
 LIST_HEADING_RE = re.compile(r"^\s*[-*+]\s+#{1,6}\s+\S")
+LIST_ITEM_RE = re.compile(r"^\s*[-*+]\s+\S")
 COURSE_TAIL_RE = re.compile(r"^(?P<institution>.+?)\s+\((?P<status>[^()]+)\)\.\s+(?P<description>.+)$")
 CONTENTS_ENTRY_RE = re.compile(r"^\s*-\s+\[(?P<label>[^\]]+)\]\((?P<target>#[^)]+)\)\s*$")
 
@@ -132,8 +133,11 @@ def _collect_issues(text: str, check_links: bool) -> tuple[list[tuple[int, str]]
                 else:
                     in_contents = False
                 current_section = text_value
-                if text_value in REQUIRED_SECTIONS and text_value not in headings:
-                    headings[text_value] = line_no
+                if text_value in REQUIRED_SECTIONS:
+                    if text_value in headings:
+                        errors.append((line_no, f"duplicate taxonomy heading: ## {text_value}"))
+                    else:
+                        headings[text_value] = line_no
             elif in_contents:
                 errors.append((line_no, "malformed Contents entry"))
             if text_value in FORBIDDEN_HEADINGS:
@@ -163,7 +167,7 @@ def _collect_issues(text: str, check_links: bool) -> tuple[list[tuple[int, str]]
         if current_section not in COURSE_SECTIONS:
             continue
 
-        if re.match(r"^\s*-\s+\S", line):
+        if LIST_ITEM_RE.match(line):
             course_count += 1
             bullet = _parse_course_bullet(line)
             if bullet is None:
@@ -174,6 +178,9 @@ def _collect_issues(text: str, check_links: bool) -> tuple[list[tuple[int, str]]
             url = bullet["url"].strip()
             institution = bullet["institution"].strip()
             status = bullet["status"].strip()
+            if not label:
+                errors.append((line_no, "empty course label"))
+                continue
             if status not in ALLOWED_STATUSES:
                 errors.append((line_no, f"invalid course status: {status}"))
             if current_section != FINAL_SECTION and institution in {"Text", "Project"}:
@@ -525,6 +532,17 @@ def _build_self_test_snippet(valid: bool) -> str:
 def _self_test() -> int:
     valid_text = _build_self_test_snippet(True)
     invalid_text = _build_self_test_snippet(False)
+    alternate_marker_text = valid_text.replace(
+        "- [Balanced Link]",
+        "* [Balanced Link]",
+        1,
+    )
+    empty_label_text = valid_text.replace("[Balanced Link]", "[]", 1)
+    duplicate_heading_text = valid_text.replace(
+        "## Foundations and Programming\n",
+        "## Foundations and Programming\n\n## Foundations and Programming\n",
+        1,
+    )
     if not any(link.url == "https://example.com/a(b)/c" for link in parse_links(valid_text)):
         print("Self-test failed")
         return 1
@@ -533,6 +551,18 @@ def _self_test() -> int:
         print("Self-test failed")
         return 1
     if not any("malformed external URL" in message for _, message in invalid_errors):
+        print("Self-test failed")
+        return 1
+    alternate_marker_errors, _, _ = _collect_issues(alternate_marker_text, False)
+    if not any("malformed course bullet" in message for _, message in alternate_marker_errors):
+        print("Self-test failed")
+        return 1
+    empty_label_errors, _, _ = _collect_issues(empty_label_text, False)
+    if not any("empty course label" in message for _, message in empty_label_errors):
+        print("Self-test failed")
+        return 1
+    duplicate_heading_errors, _, _ = _collect_issues(duplicate_heading_text, False)
+    if not any("duplicate taxonomy heading" in message for _, message in duplicate_heading_errors):
         print("Self-test failed")
         return 1
     valid_result = _validate_text(valid_text, check_links=False)
