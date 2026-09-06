@@ -27,7 +27,7 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 
 ## Selection criteria
 
-- First-party links only: official university pages, official course sites, or official companion sites.
+- First-party links whenever available: official university pages, official course sites, or official companion sites. An `Archived` entry may use a reputable archive of an official course site when the original is no longer hosted.
 - One canonical entry per course family, with historical offerings labeled `Archived` when the archival page is the most reliable source.
 - Each course appears once under the subject that best matches its learning goal; books and projects live in the final section.
 
@@ -46,7 +46,7 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 
 ## Data Structures and Algorithms
 
-- [UC Berkeley CS61B: Data Structures](https://cs61b.org/) - UC Berkeley (Core). The course teaches data structures, algorithmic analysis, and Java programming through substantial projects.
+- [UC Berkeley CS61B: Data Structures](https://fa26.datastructur.es/) - UC Berkeley (Core). The course teaches data structures, algorithmic analysis, and Java programming through substantial projects.
 - [MIT 6.006: Introduction to Algorithms](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/) - MIT (Archived). The OCW offering covers algorithm design, graph algorithms, dynamic programming, and complexity analysis.
 - [MIT 6.046J: Design and Analysis of Algorithms](https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/) - MIT (Archived). The OCW offering goes deeper into greedy methods, network flow, randomized algorithms, and complexity.
 - [Princeton COS 226: Algorithms and Data Structures](https://www.cs.princeton.edu/courses/archive/fall26/cos226/) - Princeton University (Core). The course combines data structure implementation with algorithm design and analysis.
@@ -58,7 +58,7 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 - [MIT 6.004: Computation Structures](https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/) - MIT (Archived). The OCW offering traces digital logic, sequential circuits, and processor design from gates upward.
 - [CMU 15-213: Introduction to Computer Systems](https://www.cs.cmu.edu/~213/) - Carnegie Mellon University (Core). The course links C, assembly, linking, memory, and performance in a systems-oriented lab sequence.
 - [ETH Zurich Digital Design and Computer Architecture](https://safari.ethz.ch/ddca/spring2026/doku.php?id=start) - ETH Zurich (Core). The course teaches digital logic, processor design, and the hardware/software boundary with labs and exercises.
-- [CMU 18-447: Introduction to Computer Architecture](https://www.ece.cmu.edu/~ece447/) - Carnegie Mellon University (Advanced). The course studies pipelining, caches, memory systems, and modern processor design.
+- [CMU 18-447: Introduction to Computer Architecture](https://www.ece.cmu.edu/~ece447/) - Carnegie Mellon University (Archived). The archived Spring 2024 course studies pipelining, caches, memory systems, and modern processor design.
 
 ## Operating Systems
 
@@ -68,17 +68,17 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 ## Computer Networks and Distributed Systems
 
 - [MIT 6.5840: Distributed Systems](https://pdos.csail.mit.edu/6.5840/) - MIT (Core). The course uses lectures and programming labs to study replication, fault tolerance, and consensus.
-- [Stanford CS144: Computer Networking](https://cs144.stanford.edu/) - Stanford University (Core). The course centers on the TCP/IP stack and the implementation of reliable transport.
+- [Stanford CS144: Computer Networking](https://web.archive.org/web/20260506063931/https://cs144.github.io/) - Stanford University (Archived). The archived Fall 2025 course centers on the TCP/IP stack and the implementation of reliable transport.
 - [CMU 15-440: Distributed Systems](https://www.cs.cmu.edu/~15-440/) - Carnegie Mellon University (Advanced). The course studies distributed services, coordination, replication, and consistency.
 
 ## Databases and Data Management
 
 - [CMU 15-445/645: Intro to Database Systems](https://15445.courses.cs.cmu.edu/) - Carnegie Mellon University (Core). The course covers storage engines, indexing, query processing, and transactions through implementation labs.
-- [CMU 15-721: Advanced Database Systems](https://15721.courses.cs.cmu.edu/) - Carnegie Mellon University (Advanced). The course explores advanced storage, concurrency, optimization, and distributed data systems.
+- [CMU 15-721: Advanced Database Systems](https://15721.courses.cs.cmu.edu/) - Carnegie Mellon University (Archived). The archived Fall 2025 course explores advanced storage, concurrency, optimization, and distributed data systems.
 
 ## Programming Languages and Compilers
 
-- [MIT 6.1100 (formerly 6.035): Computer Language Engineering](https://6110-sp25.github.io/) - MIT (Advanced). The course builds a compiler pipeline through parsing, semantic analysis, optimization, and code generation.
+- [MIT 6.1100 (formerly 6.035): Computer Language Engineering](https://6110-sp25.github.io/) - MIT (Archived). The archived Spring 2025 course builds a compiler pipeline through parsing, semantic analysis, optimization, and code generation.
 - [Stanford CS143: Compilers](https://web.stanford.edu/class/cs143/) - Stanford University (Advanced). The course covers front ends, intermediate representations, optimization, and runtime support.
 
 ## Theory of Computation
@@ -88,12 +88,12 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 ## Security and Cryptography
 
 - [MIT 6.858: Computer Systems Security](https://css.csail.mit.edu/6.858/2022/) - MIT (Archived). The archived course covers vulnerabilities, defenses, and systems security through lectures, labs, and projects.
-- [Stanford CS155: Introduction to Computer and Network Security](https://web.stanford.edu/class/cs155/) - Stanford University (Advanced). The course studies cryptography basics, network attacks, and secure system design.
+- [Stanford CS155: Introduction to Computer and Network Security](https://cs155.stanford.edu/) - Stanford University (Advanced). The course studies cryptography basics, network attacks, and secure system design.
 
 ## Artificial Intelligence, Machine Learning, and NLP
 
 - [CS50's Introduction to Artificial Intelligence with Python](https://cs50.harvard.edu/ai/) - Harvard University (Core). The course introduces search, optimization, machine learning, and neural methods through Python projects.
-- [Stanford CS221: Artificial Intelligence: Principles and Techniques](https://web.stanford.edu/class/cs221/) - Stanford University (Advanced). The course surveys search, probabilistic reasoning, planning, and learning in classical AI.
+- [Stanford CS221: Artificial Intelligence: Principles and Techniques](https://cs221.stanford.edu/) - Stanford University (Advanced). The course surveys search, probabilistic reasoning, planning, and learning in classical AI.
 - [Stanford CS229: Machine Learning](https://web.stanford.edu/class/cs229/) - Stanford University (Advanced). The course develops supervised learning, optimization, and probabilistic models for machine learning.
 - [UC Berkeley CS188: Introduction to Artificial Intelligence](https://inst.eecs.berkeley.edu/~cs188/fa26/) - UC Berkeley (Core). The course covers search, adversarial reasoning, probabilistic inference, and reinforcement learning.
 - [UC Berkeley CS189: Introduction to Machine Learning](https://eecs189.org/) - UC Berkeley (Advanced). The course gives a mathematical treatment of modern learning methods, generalization, and optimization.
@@ -103,11 +103,11 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 ## Computer Vision, Graphics, HCI, and Robotics
 
 - [UC Berkeley CS184/284A: Computer Graphics](https://cs184.eecs.berkeley.edu/fa26) - UC Berkeley (Advanced). The course develops rendering, geometry processing, and animation through coding assignments and a final project.
-- [Stanford CS231N: Convolutional Neural Networks for Visual Recognition](https://web.stanford.edu/class/cs231n/) - Stanford University (Advanced). The course covers image classification, detection, and deep vision models.
+- [Stanford CS231N: Convolutional Neural Networks for Visual Recognition](https://cs231n.stanford.edu/) - Stanford University (Advanced). The course covers image classification, detection, and deep vision models.
 
 ## Data Science, Parallel Computing, and Web Development
 
-- [CS50's Web Programming with Python and JavaScript](https://cs50.harvard.edu/web/) - Harvard University (Core). The course builds full-stack web apps with Flask, SQL, APIs, and JavaScript.
+- [CS50's Web Programming with Python and JavaScript](https://cs50.harvard.edu/web/) - Harvard University (Core). The course builds full-stack web apps with Django, SQL, APIs, and JavaScript.
 - [Stanford CS149: Parallel Computing](https://cs149.stanford.edu/) - Stanford University (Archived). The archived course studies parallel algorithms, GPU programming, and performance tuning.
 
 ## Texts and Companion Resources

@@ -12,6 +12,7 @@ Use official sources first:
 4. A reputable mirror only when no first-party landing page exists.
 
 Prefer stable landing pages over semester-specific URLs unless the historical page is the best available canonical source.
+For an `Archived` entry, a dated snapshot from a reputable web archive is acceptable when the original first-party host is no longer available.
 
 ## Course vs. tutorial boundary
 
