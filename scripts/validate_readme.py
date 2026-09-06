@@ -25,6 +25,7 @@ FORBIDDEN_HEADINGS = {
     "University Courses Collection",
 }
 FINAL_SECTION = "Texts and Companion Resources"
+CONTENTS_SECTION = "Contents"
 REQUIRED_SECTIONS = [
     "Foundations and Programming",
     "Mathematics for Computer Science",
@@ -45,6 +46,7 @@ COURSE_SECTIONS = set(REQUIRED_SECTIONS)
 HEADING_RE = re.compile(r"^(?P<marks>#{1,6})\s+(?P<text>.+?)\s*$")
 LIST_HEADING_RE = re.compile(r"^\s*[-*+]\s+#{1,6}\s+\S")
 COURSE_TAIL_RE = re.compile(r"^(?P<institution>.+?)\s+\((?P<status>[^()]+)\)\.\s+(?P<description>.+)$")
+CONTENTS_ENTRY_RE = re.compile(r"^\s*-\s+\[(?P<label>[^\]]+)\]\((?P<target>#[^)]+)\)\s*$")
 
 _REQUEST_TIMEOUT = DEFAULT_TIMEOUT
 
@@ -91,6 +93,9 @@ def _collect_issues(text: str, check_links: bool) -> tuple[list[tuple[int, str]]
     section_labels: dict[str, dict[str, int]] = {section: {} for section in COURSE_SECTIONS}
     normalized_urls: dict[str, int] = {}
     course_count = 0
+    contents_heading_line: int | None = None
+    contents_entries: list[tuple[int, str, str]] = []
+    in_contents = False
 
     links, link_errors = _scan_links(text, report_errors=True)
     errors.extend(link_errors)
@@ -118,11 +123,37 @@ def _collect_issues(text: str, check_links: bool) -> tuple[list[tuple[int, str]]
             if level == 1:
                 h1_lines.append(line_no)
             elif level == 2:
+                if text_value == CONTENTS_SECTION:
+                    if contents_heading_line is None:
+                        contents_heading_line = line_no
+                    else:
+                        errors.append((line_no, "duplicate Contents heading"))
+                    in_contents = True
+                else:
+                    in_contents = False
                 current_section = text_value
                 if text_value in REQUIRED_SECTIONS and text_value not in headings:
                     headings[text_value] = line_no
+            elif in_contents:
+                errors.append((line_no, "malformed Contents entry"))
             if text_value in FORBIDDEN_HEADINGS:
                 errors.append((line_no, f"forbidden imported heading: {text_value}"))
+            continue
+
+        if in_contents:
+            if not line.strip():
+                continue
+            contents_match = CONTENTS_ENTRY_RE.match(line)
+            if contents_match is None:
+                errors.append((line_no, "malformed Contents entry"))
+                continue
+            contents_entries.append(
+                (
+                    line_no,
+                    contents_match.group("label").strip(),
+                    contents_match.group("target").strip(),
+                )
+            )
             continue
 
         if LIST_HEADING_RE.match(line):
@@ -184,6 +215,11 @@ def _collect_issues(text: str, check_links: bool) -> tuple[list[tuple[int, str]]
         for extra_line in h1_lines[1:]:
             errors.append((extra_line, "multiple H1 headings"))
 
+    if contents_heading_line is None:
+        errors.append((1, "missing required taxonomy heading: ## Contents"))
+    else:
+        errors.extend(_validate_contents_entries(contents_heading_line, contents_entries))
+
     for section in REQUIRED_SECTIONS:
         if section not in headings:
             errors.append((1, f"missing required taxonomy heading: ## {section}"))
@@ -202,9 +238,82 @@ def _normalize_label(label: str) -> str:
     return re.sub(r"\s+", " ", label).strip().casefold()
 
 
+def _normalize_contents_target(label: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", label.casefold()).strip("-")
+    return f"#{slug}"
+
+
 def _is_external_url(url: str) -> bool:
     parts = urlsplit(url)
     return parts.scheme in {"http", "https"} and bool(parts.netloc)
+
+
+def _validate_contents_entries(
+    contents_heading_line: int, contents_entries: list[tuple[int, str, str]]
+) -> list[tuple[int, str]]:
+    errors: list[tuple[int, str]] = []
+    seen_labels: dict[str, int] = {}
+    seen_targets: dict[str, int] = {}
+
+    for index, expected_label in enumerate(REQUIRED_SECTIONS, 1):
+        expected_target = _normalize_contents_target(expected_label)
+        if index > len(contents_entries):
+            errors.append(
+                (
+                    contents_heading_line,
+                    f"missing Contents entry {index}: expected [{expected_label}]({expected_target})",
+                )
+            )
+            continue
+
+        line_no, actual_label, actual_target = contents_entries[index - 1]
+        if actual_label != expected_label or actual_target != expected_target:
+            if actual_label != expected_label and actual_target != expected_target:
+                message = (
+                    f"wrong Contents entry {index}: expected [{expected_label}]({expected_target}), "
+                    f"got [{actual_label}]({actual_target})"
+                )
+            elif actual_label != expected_label:
+                message = (
+                    f"wrong Contents label {index}: expected {expected_label}, got {actual_label}"
+                )
+            else:
+                message = (
+                    f"wrong Contents anchor {index}: expected {expected_target}, got {actual_target}"
+                )
+            errors.append((line_no, message))
+
+        previous_label_line = seen_labels.get(actual_label)
+        if previous_label_line is not None:
+            errors.append(
+                (
+                    line_no,
+                    f"duplicate Contents label: {actual_label} (also line {previous_label_line})",
+                )
+            )
+        else:
+            seen_labels[actual_label] = line_no
+
+        previous_target_line = seen_targets.get(actual_target)
+        if previous_target_line is not None:
+            errors.append(
+                (
+                    line_no,
+                    f"duplicate Contents anchor: {actual_target} (also line {previous_target_line})",
+                )
+            )
+        else:
+            seen_targets[actual_target] = line_no
+
+    for extra_line_no, actual_label, actual_target in contents_entries[len(REQUIRED_SECTIONS) :]:
+        errors.append(
+            (
+                extra_line_no,
+                f"unexpected Contents entry: [{actual_label}]({actual_target})",
+            )
+        )
+
+    return errors
 
 
 def _scan_links(text: str, report_errors: bool) -> tuple[list[Link], list[tuple[int, str]]]:
@@ -361,7 +470,14 @@ def _describe_network_error(error: Exception | None, code: int | None) -> str:
 
 
 def _build_self_test_snippet(valid: bool) -> str:
-    sections: list[str] = ["# Sample README", "", "Intro text.", ""]
+    sections: list[str] = ["# Sample README", "", "Intro text.", "", "## Contents", ""]
+    for index, section in enumerate(REQUIRED_SECTIONS, 1):
+        target = _normalize_contents_target(section)
+        if not valid and index == 1:
+            sections.append("- [Foundations and Programming](#foundations-and-programming-wrong)")
+        else:
+            sections.append(f"- [{section}]({target})")
+    sections.append("")
     for index, section in enumerate(REQUIRED_SECTIONS[:-1], 1):
         sections.append(f"## {section}")
         if valid and index == 1:
