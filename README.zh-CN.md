@@ -33,6 +33,10 @@
 - 同一课程系列仅保留一个权威条目;若归档版本是最可靠的来源,则将其标注为 `Archived`。
 - 每门课程在与其学习目标最契合的学科下仅出现一次;教材与项目类资源统一放在最后一节。
 
+## 贡献
+
+欢迎提交课程新增、链接修复、课程元数据更正以及其他语言翻译。提交前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md),并使用 [Pull Request 模板](.github/pull_request_template.md) 提供来源证据与校验结果。翻译文件请使用 `README.<locale>.md` 命名,并与英文 README 的章节结构和课程链接保持一致;新增课程应先同步到英文目录。
+
 ## 编程与基础
 
 - [CS50x:计算机科学导论](https://cs50.harvard.edu/x/2026/) - 哈佛大学(入门)。本课程通过习题集与期末项目介绍编程、算法与软件问题求解。
@@ -119,3 +123,7 @@
 - [Designing Data-Intensive Applications](https://dataintensive.net/) - 教材(进阶)。官方配套站点跟踪数据模型、复制、分区与流处理。
 - [Nand2Tetris](https://www.nand2tetris.org/) - 项目(核心)。该项目从 NAND 门开始,经由编译器与操作系统构建一套完整的计算机系统。
 - [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/) - 项目(核心)。这门课程形态的项目讲解 Shell 工具、Git、编辑器、调试与自动化。
+
+## 许可证
+
+本仓库的策展文字以 [CC0 1.0 Universal](LICENSE) 放弃版权;链接到的课程材料仍受其各自来源的许可证约束。

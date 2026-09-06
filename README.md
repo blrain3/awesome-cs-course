@@ -31,6 +31,10 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 - One canonical entry per course family, with historical offerings labeled `Archived` when the archival page is the most reliable source.
 - Each course appears once under the subject that best matches its learning goal; books and projects live in the final section.
 
+## Contributing
+
+Course additions, link fixes, metadata corrections, and translations are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a focused pull request, and use the [pull request template](.github/pull_request_template.md) to include source evidence and validation results. Translation files should use the `README.<locale>.md` naming pattern and stay aligned with this README's sections and course links.
+
 ## Foundations and Programming
 
 - [CS50x: Introduction to Computer Science](https://cs50.harvard.edu/x/2026/) - Harvard University (Intro). The course introduces programming, algorithms, and software problem solving through problem sets and a final project.
@@ -117,3 +121,7 @@ Start with the `Intro` and `Core` entries that match your current level, then mo
 - [Designing Data-Intensive Applications](https://dataintensive.net/) - Text (Advanced). The official companion site tracks data models, replication, partitioning, and stream processing.
 - [Nand2Tetris](https://www.nand2tetris.org/) - Project (Core). The project builds a complete computer system from NAND gates through a compiler and operating system.
 - [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/) - Project (Core). The course-style project teaches shell tooling, Git, editors, debugging, and automation.
+
+## License
+
+The repository's curation text is dedicated under [CC0 1.0 Universal](LICENSE). Linked course materials remain under their respective source licenses.

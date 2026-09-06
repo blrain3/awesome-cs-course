@@ -1,5 +1,38 @@
-## Sample Pull Request Template Description
+## Contribution type
 
-This is a sample pull request template. You can customize it to fit your project's needs.
+- [ ] Add a course
+- [ ] Fix or update a course link
+- [ ] Correct course metadata, description, or classification
+- [ ] Add or update a translation
+- [ ] Improve documentation or maintenance tooling
 
-Don't forget to commit your template file to the repository so that it can be used for future pull requests!
+## Summary
+
+<!-- Describe what changed and why it belongs in this curated list. -->
+
+## Course/source evidence
+
+<!-- Complete this section for course or link changes. Remove it for documentation-only changes. -->
+
+- Official course or resource URL:
+- Syllabus/materials evidence (lectures, readings, assignments, labs, or projects):
+- Why this is not a duplicate of an existing entry:
+
+## Translation checklist
+
+<!-- Complete this section for translation changes. -->
+
+- [ ] The file follows `README.<locale>.md` naming.
+- [ ] Course links and section structure stay aligned with `README.md`.
+- [ ] The translation links back to the canonical English README and contribution guide.
+- [ ] No locale-specific course entries were added without a corresponding catalog change.
+
+## Validation
+
+- [ ] `python scripts/validate_readme.py`
+- [ ] `python scripts/validate_readme.py --self-test`
+- [ ] `python scripts/validate_readme.py --check-links` (when external links changed)
+
+## Additional notes
+
+<!-- Include archive dates, redirects, or other context maintainers should preserve. -->

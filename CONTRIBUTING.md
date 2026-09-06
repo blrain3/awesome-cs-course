@@ -1,6 +1,15 @@
 # Contributing
 
-This repository is a curated course index, so contributions are judged by evidence, not enthusiasm.
+This repository is a curated course index, so contributions are judged by evidence, not enthusiasm. Focused pull requests are welcome for course additions, link repairs, metadata corrections, documentation improvements, and translations.
+
+## What to contribute
+
+- Add a substantive course that meets the source and evidence standards below.
+- Report or repair a dead, redirected, outdated, or misclassified entry.
+- Improve a concise description without adding marketing language or duplicate links.
+- Add or maintain a translation of the canonical README.
+
+Keep one concern per pull request where practical. Do not add a course only to increase the list size.
 
 ## Source priority
 
@@ -45,6 +54,17 @@ When two rows point to the same course family, keep one canonical entry and cons
 
 Use `Archived` when the maintained page is a historical offering rather than the current live course page, or when the archived version is the most reliable stable source for the materials.
 
+## Translation contributions
+
+Translations are welcome and should remain faithful mirrors of the canonical English catalog:
+
+- Name the file `README.<locale>.md`, for example `README.zh-CN.md`.
+- Keep the same section order, course set, and destination URLs as `README.md`. Translate headings, descriptions, and status text consistently, but do not silently add locale-specific entries.
+- Link to both `README.md` and `CONTRIBUTING.md` so readers can find the canonical catalog and contribution rules.
+- Keep the translation's contents and links synchronized when the English catalog changes. A translation-only pull request should identify the language and the sections it covers.
+
+The validator enforces the canonical English taxonomy and entry format. Run it against `README.md`; review translated headings, anchors, and cross-file links manually for parity.
+
 ## Entry format
 
 Use one bullet per entry and keep it to one line:
@@ -56,6 +76,16 @@ Use one bullet per entry and keep it to one line:
 ```
 
 Use `Text` and `Project` labels only in `Texts and Companion Resources`. Do not add extra bullets or supporting links to a course line unless they are part of the same official landing page.
+
+## Pull request checklist
+
+Before opening a pull request:
+
+- Confirm that every changed course link is first-party or an explicitly justified archive.
+- Check that the entry is not a duplicate after URL and course-family normalization.
+- Keep each course line to one concise sentence and place it in the best-fit section.
+- Describe redirects, archive dates, or other maintenance context in the pull request.
+- Complete the repository pull request template and include the commands you ran.
 
 ## Validation
 
