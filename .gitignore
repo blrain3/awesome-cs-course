@@ -6,6 +6,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+scripts
 
 # IDE and editor
 .vscode/
@@ -24,3 +25,4 @@ Thumbs.db
 # Local SDD / agent workflow scratch
 .superpowers/
 docs/superpowers/
+docs
