@@ -244,7 +244,12 @@ def _normalize_contents_target(label: str) -> str:
 
 
 def _is_external_url(url: str) -> bool:
-    parts = urlsplit(url)
+    if any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127 for ch in url):
+        return False
+    try:
+        parts = urlsplit(url)
+    except ValueError:
+        return False
     return parts.scheme in {"http", "https"} and bool(parts.netloc)
 
 
@@ -487,12 +492,16 @@ def _build_self_test_snippet(valid: bool) -> str:
             continue
         if not valid and index == 1:
             sections.append(
-                "- [Balanced Link](https://example.com/a(b)/c) - Example University (Draft). Example description."
+                "- [Balanced Link](https://[bad) - Example University (Draft). Example description."
             )
             continue
         institution = "Example University"
         if not valid and index == 2:
             institution = "Text"
+            sections.append(
+                f"- [{section}](https://example.com/a b) - {institution} (Core). Example description."
+            )
+            continue
         sections.append(
             f"- [{section}](https://example.com/{index}) - {institution} (Core). Example description."
         )
@@ -521,6 +530,9 @@ def _self_test() -> int:
         return 1
     invalid_errors, _, _ = _collect_issues(invalid_text, False)
     if not any("malformed or unclosed markdown link" in message for _, message in invalid_errors):
+        print("Self-test failed")
+        return 1
+    if not any("malformed external URL" in message for _, message in invalid_errors):
         print("Self-test failed")
         return 1
     valid_result = _validate_text(valid_text, check_links=False)
