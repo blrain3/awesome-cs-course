@@ -2,24 +2,30 @@
 
 A curated index of rigorous, publicly available computer science courses and companion texts. Quality over quantity: entries favor complete teaching material, stable links, and long-term learning value.
 
-中文版请见 [README.zh-CN.md](README.zh-CN.md)。
+[简体中文](README.zh-CN.md)
 
 ## Contents
 
-- [Foundations and Programming](#foundations-and-programming)
-- [Mathematics for Computer Science](#mathematics-for-computer-science)
-- [Data Structures and Algorithms](#data-structures-and-algorithms)
-- [Computer Architecture and Systems](#computer-architecture-and-systems)
-- [Operating Systems](#operating-systems)
-- [Computer Networks and Distributed Systems](#computer-networks-and-distributed-systems)
-- [Databases and Data Management](#databases-and-data-management)
-- [Programming Languages and Compilers](#programming-languages-and-compilers)
-- [Theory of Computation](#theory-of-computation)
-- [Security and Cryptography](#security-and-cryptography)
-- [Artificial Intelligence, Machine Learning, and NLP](#artificial-intelligence-machine-learning-and-nlp)
-- [Computer Vision, Graphics, HCI, and Robotics](#computer-vision-graphics-hci-and-robotics)
-- [Data Science, Parallel Computing, and Web Development](#data-science-parallel-computing-and-web-development)
-- [Texts and Companion Resources](#texts-and-companion-resources)
+- [Awesome CS Courses](#awesome-cs-courses)
+  - [Contents](#contents)
+  - [How to use this list](#how-to-use-this-list)
+  - [Selection criteria](#selection-criteria)
+  - [Contributing](#contributing)
+  - [Foundations and Programming](#foundations-and-programming)
+  - [Mathematics for Computer Science](#mathematics-for-computer-science)
+  - [Data Structures and Algorithms](#data-structures-and-algorithms)
+  - [Computer Architecture and Systems](#computer-architecture-and-systems)
+  - [Operating Systems](#operating-systems)
+  - [Computer Networks and Distributed Systems](#computer-networks-and-distributed-systems)
+  - [Databases and Data Management](#databases-and-data-management)
+  - [Programming Languages and Compilers](#programming-languages-and-compilers)
+  - [Theory of Computation](#theory-of-computation)
+  - [Security and Cryptography](#security-and-cryptography)
+  - [Artificial Intelligence, Machine Learning, and NLP](#artificial-intelligence-machine-learning-and-nlp)
+  - [Computer Vision, Graphics, HCI, and Robotics](#computer-vision-graphics-hci-and-robotics)
+  - [Data Science, Parallel Computing, and Web Development](#data-science-parallel-computing-and-web-development)
+  - [Texts and Companion Resources](#texts-and-companion-resources)
+  - [License](#license)
 
 ## How to use this list
 
